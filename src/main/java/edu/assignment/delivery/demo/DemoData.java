@@ -50,6 +50,7 @@ public final class DemoData {
         registry.register(new CheapestRouteStrategy());
         registry.register(new EcoFriendlyRouteStrategy());
         registry.register(new BalancedRouteStrategy(0.40, 0.30, 0.10, 0.20));
+        registry.register(new DistanceFirstStrategy());
         return registry;
     }
 
