@@ -1,0 +1,13 @@
+Verified locally: 2026-10-19
+java version "17.0.12" 2024-07-16 LTS
+Maven package: BUILD SUCCESS
+JUnit 5 totals: tests=47, failures=0, errors=0, skipped=0
+edu.assignment.delivery.ConstraintTest: tests=14, failures=0, errors=0, skipped=0
+edu.assignment.delivery.PlanningTest: tests=12, failures=0, errors=0, skipped=0
+edu.assignment.delivery.StrategyTest: tests=21, failures=0, errors=0, skipped=0
+Initial four-strategy application: run.ps1 compiled and ran before fifth-strategy commit.
+Final executable JAR: exit 0; all six demo sections completed, including five-strategy comparison.
+Three switches on the same RoutePlanner: Fastest -> Cheapest -> Eco -> Balanced.
+Standard winners: R1-express / R2-economy / R3-green / R6-balanced / R4-short.
+Artifacts contain synthetic local data; no mapping API or real delivery service was tested.
+GitHub publication and Moodle submission: not performed.

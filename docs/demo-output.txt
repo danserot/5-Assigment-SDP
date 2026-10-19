@@ -1,0 +1,42 @@
+
+=== 1. Same request, all registered strategies ===
+Fastest       -> R1-express   | time=  22 min | cost=3000.00 | distance=10.0 km | CO2=5.0 kg | score=22.0000
+Cheapest      -> R2-economy   | time=  48 min | cost=1240.00 | distance=16.0 km | CO2=6.0 kg | score=1240.0000
+Eco           -> R3-green     | time=  35 min | cost=1540.00 | distance=12.0 km | CO2=0.6 kg | score=1.2000
+Balanced      -> R6-balanced  | time=  29 min | cost=2005.00 | distance=11.0 km | CO2=1.6 kg | score=0.2364
+DistanceFirst -> R4-short     | time=  44 min | cost=2390.00 | distance= 7.0 km | CO2=2.8 kg | score=7.0000
+
+=== 2. Three runtime switches on the SAME RoutePlanner object ===
+Fastest       -> R1-express   | time=  22 min | cost=3000.00 | distance=10.0 km | CO2=5.0 kg | score=22.0000
+Cheapest      -> R2-economy   | time=  48 min | cost=1240.00 | distance=16.0 km | CO2=6.0 kg | score=1240.0000
+Eco           -> R3-green     | time=  35 min | cost=1540.00 | distance=12.0 km | CO2=0.6 kg | score=1.2000
+Balanced      -> R6-balanced  | time=  29 min | cost=2005.00 | distance=11.0 km | CO2=1.6 kg | score=0.2364
+
+=== 3. Automatic policy selection ===
+URGENT-1: Fastest       -> R1-express   | time=  22 min | cost=3300.00 | distance=10.0 km | CO2=5.0 kg | score=22.0000
+ECONOMY-2: Cheapest      -> R2-economy   | time=  48 min | cost=1240.00 | distance=16.0 km | CO2=6.0 kg | score=1240.0000
+ECO-3: Eco           -> R3-green     | time=  35 min | cost=1540.00 | distance=12.0 km | CO2=0.6 kg | score=1.2000
+STANDARD-105: Balanced      -> R6-balanced  | time=  29 min | cost=2005.00 | distance=11.0 km | CO2=1.6 kg | score=0.2364
+PREFERENCE-4: Eco           -> R3-green     | time=  35 min | cost=1540.00 | distance=12.0 km | CO2=0.6 kg | score=1.2000
+
+=== 4. Same Fastest algorithm, different budgets ===
+Fastest       -> R1-express   | time=  22 min | cost=3000.00 | distance=10.0 km | CO2=5.0 kg | score=22.0000
+Fastest       -> R6-balanced  | time=  29 min | cost=2005.00 | distance=11.0 km | CO2=1.6 kg | score=29.0000
+
+=== 5. Decision explanation and every candidate ===
+Balanced      -> R6-balanced  | time=  29 min | cost=2005.00 | distance=11.0 km | CO2=1.6 kg | score=0.2364
+Reason: Minimum normalized weighted score 0.2364; weights time=0.40, cost=0.30, distance=0.10, CO2=0.20. Each criterion uses (value-min)/(max-min) among eligible routes; equal ranges contribute 0.
+  R1-express: eligible, objective=0.3115
+  R2-economy: eligible, objective=0.6059
+  R3-green: eligible, objective=0.2627
+  R4-short: eligible, objective=0.5107
+  R5-highway: eligible, objective=0.6000
+  R6-balanced: eligible, objective=0.2364
+  R7-closed rejected: Route unavailable
+  R8-rural: eligible, objective=0.5215
+
+=== 6. Explicit edge and failure cases ===
+Empty candidate list: handled NoSuitableRouteException - No suitable route for STANDARD-105 using Balanced
+No feasible route: handled NoSuitableRouteException - No suitable route for IMPOSSIBLE using Balanced
+Invalid weights: handled IllegalArgumentException - Weights must sum to 1.0
+Negative route distance: handled IllegalArgumentException - distanceKm must be finite and non-negative

@@ -1,0 +1,59 @@
+@startuml
+title Smart Delivery Strategy architecture
+interface RouteStrategy {
+  +selectRoute(routes, request): RouteDecision
+  +getStrategyName(): String
+}
+class RoutePlanner <<Context>> {
+  -strategy: RouteStrategy
+  +setStrategy(strategy)
+  +plan(routes, request): RouteDecision
+}
+abstract class AbstractRouteStrategy {
+  +selectRoute(routes, request): RouteDecision
+  #prepareScorer(eligible, request)
+  #explain(selected)
+}
+class FastestRouteStrategy
+class CheapestRouteStrategy
+class EcoFriendlyRouteStrategy
+class BalancedRouteStrategy
+class DistanceFirstStrategy
+class StrategySelector {
+  -byPriority: Map
+  +select(request): RouteStrategy
+}
+class StrategyRegistry {
+  +register(strategy)
+  +all(): List
+}
+class StrategyComparison
+class ConstraintEvaluator {
+  +evaluate(routes, request): List
+}
+class DeliveryMetrics
+class Route <<record>>
+class DeliveryRequest <<record>>
+class RouteDecision <<record>>
+class RouteAssessment <<record>>
+
+RoutePlanner o--> RouteStrategy : current algorithm
+RouteStrategy <|.. AbstractRouteStrategy
+AbstractRouteStrategy <|-- FastestRouteStrategy
+AbstractRouteStrategy <|-- CheapestRouteStrategy
+AbstractRouteStrategy <|-- EcoFriendlyRouteStrategy
+AbstractRouteStrategy <|-- BalancedRouteStrategy
+AbstractRouteStrategy <|-- DistanceFirstStrategy
+StrategySelector --> RouteStrategy : chooses policy
+StrategySelector ..> DeliveryRequest
+StrategyRegistry o--> RouteStrategy : registered algorithms
+StrategyComparison --> StrategyRegistry
+StrategyComparison ..> RouteStrategy : executes each
+AbstractRouteStrategy --> ConstraintEvaluator : filters before ranking
+ConstraintEvaluator --> DeliveryMetrics
+ConstraintEvaluator ..> Route
+ConstraintEvaluator ..> DeliveryRequest
+RouteStrategy ..> RouteDecision : returns
+RouteDecision --> Route : selected
+RouteDecision o--> RouteAssessment : all candidates
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+title Automatic urgent delivery planning
+actor Client
+participant StrategySelector
+participant RoutePlanner
+participant FastestRouteStrategy
+participant ConstraintEvaluator
+participant DeliveryMetrics
+Client -> StrategySelector: select(urgentRequest)
+StrategySelector --> Client: fastestStrategy
+Client -> RoutePlanner: setStrategy(fastestStrategy)
+Client -> RoutePlanner: plan(routes, urgentRequest)
+RoutePlanner -> FastestRouteStrategy: selectRoute(routes, urgentRequest)
+FastestRouteStrategy -> ConstraintEvaluator: evaluate(routes, urgentRequest)
+loop each candidate route
+  ConstraintEvaluator -> DeliveryMetrics: calculate(route, urgentRequest)
+  DeliveryMetrics --> ConstraintEvaluator: effective time and full cost
+end
+ConstraintEvaluator --> FastestRouteStrategy: assessments with rejection reasons
+alt at least one eligible route
+  FastestRouteStrategy -> FastestRouteStrategy: score eligible routes and choose minimum
+  FastestRouteStrategy --> RoutePlanner: RouteDecision
+  RoutePlanner --> Client: RouteDecision
+else no eligible route
+  FastestRouteStrategy --> RoutePlanner: NoSuitableRouteException
+  RoutePlanner --> Client: NoSuitableRouteException
+end
+@enduml
