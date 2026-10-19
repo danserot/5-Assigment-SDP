@@ -268,6 +268,4 @@ git show --stat 30dc5b6
 
 The commits were created sequentially during this implementation on 19 October 2026.
 
-Create an empty public GitHub repository, then connect this existing local history and push it. Do not initialize a replacement repository or upload only one snapshot if you need to retain the commit history. Submit the public repository link and this README/report through Moodle. Remote publication and Moodle submission have not been performed.
-
-For a guided build and defense walkthrough in Russian, read [STEP_BY_STEP_RU.md](STEP_BY_STEP_RU.md). All project source files are collected in [FULL_CODE.md](FULL_CODE.md).
+The project is published at [danserot/5-Assigment-SDP](https://github.com/danserot/5-Assigment-SDP). Submit the public repository link and this README/report through Moodle according to the course requirements.
